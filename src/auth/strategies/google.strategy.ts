@@ -1,6 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth2';
 import { Injectable } from '@nestjs/common';
+
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -19,20 +20,19 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     _refreshToken: string,
     profile: any,
     done: VerifyCallback,
-  ): Promise<any> {
-    const { name, emails, photos } = profile;
+  ) {
+    const { name, email, picture } = profile;
 
     const user = {
-      email: emails[0].value,
+      email: email,
       firstName: name.givenName,
       lastName: name.familyName,
-      pictureUrl: photos[0].value,
+      pictureUrl: picture,
     };
 
     const existingUser = await this.userService.findOne(user.email);
 
     if (!existingUser) {
-      console.log('Creating new user');
       await this.userService.create({
         email: user.email,
         firstName: user.firstName,
@@ -46,8 +46,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
 
       return;
     }
-
-    console.log('User already exists');
 
     done(null, {
       accessToken,
