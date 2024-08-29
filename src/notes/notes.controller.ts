@@ -1,7 +1,7 @@
 import { Controller, Get, Post } from '@nestjs/common';
 
 import { NotesService } from './notes.service';
-import { Note } from './interfaces/Note.interface';
+import { Note } from './interfaces/note.interface';
 
 @Controller('notes')
 export class NotesController {
