@@ -22,12 +22,24 @@ export class NoteRepository {
     return createdNote;
   }
 
-  async findAllByUser({ email }: { email: string }): Promise<any[]> {
+  async findAllByUser({
+    email,
+    page = 1,
+    limit = 10,
+  }: {
+    email: string;
+    page?: number;
+    limit?: number;
+  }): Promise<any[]> {
+    const skip = (page - 1) * limit;
+
     const result = await this.noteModel
       .find()
       .where({
         user: email,
       })
+      .skip(skip)
+      .limit(limit)
       .exec();
 
     if (result.length === 0) {

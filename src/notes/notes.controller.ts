@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -18,6 +19,7 @@ import {
   ApiNotFoundResponse,
   ApiNotModifiedResponse,
   ApiOkResponse,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -69,9 +71,27 @@ export class NotesController {
   @ApiUnauthorizedResponse({
     description: 'Returns when the user is not authenticated',
   })
-  async findAllByUser(@Req() req) {
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Page number',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Number of items per page',
+  })
+  async findAllByUser(
+    @Req() req,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+  ) {
     return this.notesService.findAllByUser({
       userEmail: req.user.email,
+      page: +page,
+      limit: +limit,
     });
   }
 

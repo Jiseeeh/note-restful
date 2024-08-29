@@ -12,8 +12,20 @@ export class NotesService {
     return await this.noteRepository.create(createNoteDto, userEmail);
   }
 
-  async findAllByUser({ userEmail }: { userEmail: string }) {
-    return await this.noteRepository.findAllByUser({ email: userEmail });
+  async findAllByUser({
+    userEmail,
+    page,
+    limit,
+  }: {
+    userEmail: string;
+    page?: number;
+    limit?: number;
+  }) {
+    return await this.noteRepository.findAllByUser({
+      email: userEmail,
+      page,
+      limit,
+    });
   }
 
   async findOne({ id, userEmail }: { id: string; userEmail: string }) {
