@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 import { User } from 'src/user/schemas/user.schema';
 import { Tags } from '../enums/tags.enum';
@@ -8,7 +8,7 @@ export type NoteDocument = HydratedDocument<Note>;
 
 @Schema()
 export class Note {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({ type: String, ref: 'User' })
   user: User;
 
   @Prop({ required: true })
