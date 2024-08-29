@@ -14,7 +14,7 @@ export class UserRepository {
   }
 
   async findOne(email: string): Promise<User> {
-    return this.userModel.findOne({ _id: email }).exec();
+    return this.userModel.findOne({ email: email }).exec();
   }
 
   async create(createUserDto: CreateUserDto) {
