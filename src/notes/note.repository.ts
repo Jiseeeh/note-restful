@@ -49,7 +49,10 @@ export class NoteRepository {
 
   async updateOne(id: string, userEmail: string, updateNoteDto: UpdateNoteDto) {
     const result = await this.noteModel
-      .updateOne({ _id: id, user: userEmail }, updateNoteDto)
+      .updateOne({ _id: id, user: userEmail }, {
+        ...updateNoteDto,
+        updatedAt: new Date(),
+      })
       .exec();
 
     const { matchedCount, modifiedCount } = result;
