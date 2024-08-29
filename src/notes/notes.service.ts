@@ -35,4 +35,8 @@ export class NotesService {
   async deleteOne({ id, userEmail }: { id: string; userEmail: string }) {
     return await this.noteRepository.deleteOne(id, userEmail);
   }
+
+  // async addMockData({ userEmail }: { userEmail: string }) {
+  //   return await this.noteRepository.addMockData(userEmail);
+  // }
 }

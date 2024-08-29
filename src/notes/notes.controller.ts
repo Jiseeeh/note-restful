@@ -133,4 +133,9 @@ export class NotesController {
       userEmail: req.user.email,
     });
   }
+
+  // @Post('mock')
+  // async addMockData(@Req() req) {
+  //   return this.notesService.addMockData({ userEmail: req.user.email });
+  // }
 }
