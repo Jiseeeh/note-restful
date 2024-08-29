@@ -7,10 +7,10 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   const config = new DocumentBuilder()
-    .setTitle('Sample title')
-    .setDescription('Sample desc')
+    .setTitle('Note RESTful API')
+    .setDescription('A simple RESTful API for a note-taking application')
     .setVersion('1.0')
-    .addTag('sample')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
