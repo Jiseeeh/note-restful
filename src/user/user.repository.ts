@@ -14,11 +14,16 @@ export class UserRepository {
   }
 
   async findOne(email: string): Promise<User> {
-    return this.userModel.findOne({ email: email }).exec();
+    return this.userModel.findOne({ _id: email }).exec();
   }
 
   async create(createUserDto: CreateUserDto) {
-    const createdUser = await this.userModel.create(createUserDto);
+    const createdUser = this.userModel.create({
+      _id: createUserDto.email,
+      firstName: createUserDto.firstName,
+      lastName: createUserDto.lastName,
+      pictureUrl: createUserDto.pictureUrl,
+    });
 
     return createdUser;
   }
