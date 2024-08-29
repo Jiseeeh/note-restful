@@ -22,13 +22,13 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import { GoogleOAuthGuard } from 'src/auth/guards/google-oauth.guard';
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import { ValidationPipe } from './pipes/validation.pipe';
 import { Note } from './schemas/note.schema';
 import { NoteResponse } from './responses/note.response';
+import { GoogleOAuthGuard } from './../auth/guards/google-oauth.guard';
 
 @ApiTags('notes')
 @ApiBearerAuth()
