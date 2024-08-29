@@ -1,3 +1,4 @@
+import { CreateNoteDto } from './dto/create-note-dto';
 import { Injectable } from '@nestjs/common';
 
 import { Note } from './interfaces/note.interface';
@@ -5,11 +6,13 @@ import { Tags } from './enums/tags.enum';
 
 @Injectable()
 export class NotesService {
-  create(): Note {
+  create(createNoteDto: CreateNoteDto, userEmail: string): Note {
+    console.log(createNoteDto);
+
     return {
-      id: '1',
+      id: 'acknowledged',
       title: 'Note 1',
-      userId: '1',
+      userEmail: '1@gmail.com',
       content: 'content of Note 1',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -17,7 +20,7 @@ export class NotesService {
     };
   }
 
-  findAll(): Note[] {
+  findAllByUser({ email: string }): Note[] {
     return [];
   }
 }
