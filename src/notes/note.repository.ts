@@ -1,10 +1,12 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
+import { faker } from '@faker-js/faker';
 
 import { UpdateNoteDto } from './dto/update-note.dto';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { Note, NoteDocument } from './schemas/note.schema';
+import { Tags } from './enums/tags.enum';
 
 @Injectable()
 export class NoteRepository {
@@ -107,4 +109,28 @@ export class NoteRepository {
       );
     }
   }
+
+  // async addMockData(userEmail: string) {
+  //   const notes = Array.from({ length: 100 }, () => ({
+  //     title: faker.lorem.sentence(),
+  //     content: faker.lorem.paragraph({ min: 2, max: 5 }),
+  //     tags: [
+  //       faker.helpers.arrayElement([
+  //         Tags.WORK,
+  //         Tags.SHOPPING,
+  //         Tags.PERSONAL,
+  //         Tags.OTHER,
+  //       ]),
+  //     ],
+  //     user: userEmail,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //   }));
+
+  //   await this.noteModel.insertMany(notes);
+
+  //   return {
+  //     message: 'Mock data added successfully',
+  //   };
+  // }
 }
