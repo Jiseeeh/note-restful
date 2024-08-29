@@ -1,26 +1,38 @@
-import { CreateNoteDto } from './dto/create-note-dto';
 import { Injectable } from '@nestjs/common';
 
-import { Note } from './interfaces/note.interface';
-import { Tags } from './enums/tags.enum';
+import { NoteRepository } from './note.repository';
+import { CreateNoteDto } from './dto/create-note.dto';
+import { UpdateNoteDto } from './dto/update-note.dto';
 
 @Injectable()
 export class NotesService {
-  create(createNoteDto: CreateNoteDto, userEmail: string): Note {
-    console.log(createNoteDto);
+  constructor(private readonly noteRepository: NoteRepository) {}
 
-    return {
-      id: 'acknowledged',
-      title: 'Note 1',
-      userEmail: '1@gmail.com',
-      content: 'content of Note 1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      tags: [Tags.WORK],
-    };
+  async create(createNoteDto: CreateNoteDto, userEmail: string) {
+    return await this.noteRepository.create(createNoteDto, userEmail);
   }
 
-  findAllByUser({ email: string }): Note[] {
-    return [];
+  async findAllByUser({ userEmail }: { userEmail: string }) {
+    return await this.noteRepository.findAllByUser({ email: userEmail });
+  }
+
+  async findOne({ id, userEmail }: { id: string; userEmail: string }) {
+    return await this.noteRepository.findOne(id, userEmail);
+  }
+
+  async updateOne({
+    id,
+    userEmail,
+    updateNoteDto,
+  }: {
+    id: string;
+    userEmail: string;
+    updateNoteDto: UpdateNoteDto;
+  }) {
+    return await this.noteRepository.updateOne(id, userEmail, updateNoteDto);
+  }
+
+  async deleteOne({ id, userEmail }: { id: string; userEmail: string }) {
+    return await this.noteRepository.deleteOne(id, userEmail);
   }
 }
