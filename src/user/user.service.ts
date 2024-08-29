@@ -8,14 +8,14 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async findAll() {
-    return this.userRepository.findAll();
+    return await this.userRepository.findAll();
   }
 
   async findOne(email: string) {
-    return this.userRepository.findOne(email);
+    return await this.userRepository.findOne(email);
   }
 
   async create(createUserDto: CreateUserDto) {
-    return this.userRepository.create(createUserDto);
+    return await this.userRepository.create(createUserDto);
   }
 }
