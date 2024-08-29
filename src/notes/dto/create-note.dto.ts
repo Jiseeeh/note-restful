@@ -1,12 +1,20 @@
-import { IsArray, IsDateString, IsEnum, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsDateString,
+  IsEnum,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 import { Tags } from '../enums/tags.enum';
 
 export class CreateNoteDto {
   @IsString()
+  @MinLength(3)
   title: string;
 
   @IsString()
+  @MinLength(10)
   content: string;
 
   @IsDateString()

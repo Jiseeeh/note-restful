@@ -11,7 +11,7 @@ export class NoteRepository {
   constructor(@InjectModel(Note.name) private noteModel: Model<NoteDocument>) {}
 
   async create(createNoteDto: CreateNoteDto, email: string) {
-    const createdNote = this.noteModel.create({
+    const createdNote = await this.noteModel.create({
       ...createNoteDto,
       user: email,
       updatedAt: new Date(),
@@ -49,10 +49,13 @@ export class NoteRepository {
 
   async updateOne(id: string, userEmail: string, updateNoteDto: UpdateNoteDto) {
     const result = await this.noteModel
-      .updateOne({ _id: id, user: userEmail }, {
-        ...updateNoteDto,
-        updatedAt: new Date(),
-      })
+      .updateOne(
+        { _id: id, user: userEmail },
+        {
+          ...updateNoteDto,
+          updatedAt: new Date(),
+        },
+      )
       .exec();
 
     const { matchedCount, modifiedCount } = result;
@@ -62,7 +65,10 @@ export class NoteRepository {
     if (matchedCount > 0 && modifiedCount > 0) {
       message = 'Document updated successfully.';
     } else if (matchedCount > 0 && modifiedCount === 0) {
-      message = 'No changes made to the document.';
+      throw new HttpException(
+        'No changes made to the document.',
+        HttpStatus.NOT_MODIFIED,
+      );
     } else {
       message = 'Update failed or document not found.';
       success = false;
@@ -75,24 +81,30 @@ export class NoteRepository {
   }
 
   async deleteOne(id: string, userEmail: string) {
-    const result = await this.noteModel
-      .deleteOne({ _id: id, user: userEmail })
-      .exec();
+    try {
+      const result = await this.noteModel
+        .deleteOne({ _id: id, user: userEmail })
+        .exec();
 
-    const { deletedCount } = result;
-    let message = '';
-    let success = true;
+      const { deletedCount } = result;
+      let message = '';
+      let success = true;
 
-    if (deletedCount > 0) {
-      message = 'Document deleted successfully.';
-    } else {
-      message = 'Delete failed or document not found.';
-      success = false;
+      if (deletedCount > 0) {
+        message = 'Document deleted successfully.';
+      } else {
+        throw new HttpException('Document not found', HttpStatus.NOT_FOUND);
+      }
+
+      return {
+        message,
+        success,
+      };
+    } catch (error) {
+      throw new HttpException(
+        'Something went wrong, It could be the id is wrongly formatted',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
-
-    return {
-      message,
-      success,
-    };
   }
 }
