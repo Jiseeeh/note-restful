@@ -15,7 +15,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   }
 
   async validate(
-    _accessToken: string,
+    accessToken: string,
     _refreshToken: string,
     profile: any,
     done: VerifyCallback,
@@ -34,14 +34,14 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     if (!existingUser) {
       console.log('Creating new user');
       await this.userService.create({
-        _id: user.email,
+        email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
         pictureUrl: user.pictureUrl,
       });
 
       done(null, {
-        accessToken: _accessToken,
+        accessToken,
       });
 
       return;
@@ -50,7 +50,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     console.log('User already exists');
 
     done(null, {
-      accessToken: _accessToken,
+      accessToken,
     });
   }
 }
