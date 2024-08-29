@@ -10,7 +10,7 @@ import { Note, NoteDocument } from './schemas/note.schema';
 export class NoteRepository {
   constructor(@InjectModel(Note.name) private noteModel: Model<NoteDocument>) {}
 
-  async create(createNoteDto: CreateNoteDto, email: string) {
+  async create(createNoteDto: CreateNoteDto, email: string): Promise<any> {
     const createdNote = await this.noteModel.create({
       ...createNoteDto,
       user: email,
@@ -20,7 +20,7 @@ export class NoteRepository {
     return createdNote;
   }
 
-  async findAllByUser({ email }: { email: string }) {
+  async findAllByUser({ email }: { email: string }): Promise<any[]> {
     const result = await this.noteModel
       .find()
       .where({
@@ -35,7 +35,7 @@ export class NoteRepository {
     return result;
   }
 
-  async findOne(id: string, userEmail: string) {
+  async findOne(id: string, userEmail: string): Promise<any> {
     const result = await this.noteModel
       .findOne({ _id: id, user: userEmail })
       .exec();
