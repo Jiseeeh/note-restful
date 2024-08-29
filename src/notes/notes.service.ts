@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Note } from './interfaces/Note.interface';
-import { Tags } from './enums/Tags.enum';
+
+import { Note } from './interfaces/note.interface';
+import { Tags } from './enums/tags.enum';
 
 @Injectable()
 export class NotesService {
