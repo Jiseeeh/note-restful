@@ -1,4 +1,4 @@
-import { Tags } from '../enums/Tags.enum';
+import { Tags } from '../enums/tags.enum';
 
 export interface Note {
   id: string;
