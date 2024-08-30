@@ -99,7 +99,7 @@ Start the server
   GET /api/auth/login-google
 ```
 
-Visit the route to login with google and include the given token to future requests, you can use something like **POSTMAN**.
+Visit the route to login with google and include the given token to future requests, you can use something like **POSTMAN** and add the token to the authorization header: `Bearer <access-token>`
 
 ## Get all notes
 
