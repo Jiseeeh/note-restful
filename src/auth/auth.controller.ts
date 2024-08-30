@@ -17,7 +17,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { GoogleRedirectResponse } from './repsponses/google-redirect.response';
+import { GoogleRedirectResponse } from './responses/google-redirect.response';
 import { GoogleOAuthGuard } from './guards/google-oauth.guard';
 
 @ApiTags('authentication')
