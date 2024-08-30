@@ -16,6 +16,7 @@ export class NoteRepository {
     const createdNote = await this.noteModel.create({
       ...createNoteDto,
       user: email,
+      createdAt: new Date(),
       updatedAt: new Date(),
     });
 

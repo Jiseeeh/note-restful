@@ -17,9 +17,6 @@ export class CreateNoteDto {
   @MinLength(10)
   content: string;
 
-  @IsDateString()
-  createdAt: Date;
-
   @IsArray()
   @IsEnum(Tags, { each: true })
   tags: Tags[];
