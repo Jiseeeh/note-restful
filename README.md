@@ -14,9 +14,13 @@ A simple NestJS note RESTful API with Google OAuth.
 - [Table of Contents](#table-of-contents)
 - [Running Locally](#running-locally)
 - [API Reference](#api-reference)
-  - [Get all items](#get-all-items)
-  - [Get item](#get-item)
-  - [add(num1, num2)](#addnum1-num2)
+  - [Get access token](#get-access-token)
+  - [Get all notes](#get-all-notes)
+  - [Get a note](#get-a-note)
+  - [Create a Note](#create-a-note)
+  - [Update a Note](#update-a-note)
+  - [Delete a Note](#delete-a-note)
+  - [Swagger Docs](#swagger-docs)
 - [Running Tests](#running-tests)
 
 # Running Locally
@@ -86,34 +90,88 @@ Start the server
 
 # API Reference
 
-## Get all items
+> [!NOTE]
+>Before you can access the note routes, you need to have an access token present in the request headers.
+
+## Get access token
 
 ```http
-  GET /api/items
+  GET /api/auth/login-google
+```
+
+Visit the route to login with google and include the given token to future requests, you can use something like **POSTMAN**.
+
+## Get all notes
+
+```http
+  GET /api/notes
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+| `page?`   | `number` | the current page you want to get |
+| `limit?`   | `number`| the amount of notes you want to get per page |
 
-## Get item
+## Get a note
 
 ```http
-  GET /api/items/${id}
+  GET /api/notes/${noteId}
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+`noteId` of the note to be fetched
 
-## add(num1, num2)
+## Create a Note
 
-Takes two numbers and returns the sum.
+```http
+  POST /api/notes
+```
+
+Sample body value
+
+```json
+{
+  "title": "string",
+  "content": "stringstri",
+  "tags": [
+    "WORK" // could be "WORK", "OTHER", "PERSONAL", "SHOPPING" check out tags.enum.ts
+  ]
+}
+```
+
+## Update a Note
+
+```http
+  PATCH /api/notes/${noteId}
+```
+
+Sample body value is the same as above but all are optional
+
+## Delete a Note
+
+```http
+  DELETE /api/notes/${noteId}
+```
+
+`noteId` of the note to be deleted
+
+## Swagger Docs
+
+```http
+  GET /api/docs
+```
+
+Endpoint to see more about the api docs, just visit the route.
 
 # Running Tests
 
-To run tests, run the following command
+To run unit tests
 
 ```bash
   npm run test
+```
+
+To run e2e tests
+
+```bash
+npm run test:e2e
 ```
