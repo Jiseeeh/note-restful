@@ -27,10 +27,14 @@ export class AuthController {
 
   /**
    *
-   * The route to login with Google
+   * The route to login with Google, access path to get redirected to Google's OAuth2
    */
   @Get('login-google')
   @UseGuards(AuthGuard('google'))
+  @ApiOkResponse({
+    description:
+      'Returns when the user has been successfully authenticated and will be redirected to the callback',
+  })
   async googleAuth(@Req() req) {}
 
   /**
@@ -70,7 +74,7 @@ export class AuthController {
   @HttpCode(204)
   async logoutGoogle(@Req() req) {
     const token = req.headers['authorization']?.split(' ')[1];
-    console.log({ token });
+
     return this.authService.signOut(token);
   }
 }
