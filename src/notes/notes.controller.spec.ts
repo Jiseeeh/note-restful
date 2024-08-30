@@ -64,11 +64,19 @@ describe('NotesController', () => {
 
   describe('findAllByUser', () => {
     it('should return all notes for the authenticated user', async () => {
+      const page = 1;
+      const limit = 10;
+
       jest.spyOn(notesService, 'findAllByUser').mockResolvedValue(createdNotes);
 
-      expect(await notesController.findAllByUser(req)).toBe(createdNotes);
+      expect(await notesController.findAllByUser(req, page, limit)).toBe(
+        createdNotes,
+      );
+
       expect(notesService.findAllByUser).toHaveBeenCalledWith({
         userEmail: 'test@example.com',
+        page,
+        limit,
       });
     });
   });
