@@ -106,6 +106,9 @@ export class NotesController {
     description: 'Returns all notes for the authenticated user',
     type: NoteResponse,
   })
+  @ApiNotFoundResponse({
+    description: 'Returns when the note was not found',
+  })
   async findOne(@Req() req, @Param('noteId') noteId: string): Promise<Note> {
     return this.notesService.findOne({
       id: noteId,
