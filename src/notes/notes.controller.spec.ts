@@ -15,7 +15,6 @@ describe('NotesController', () => {
   const createNoteDto: CreateNoteDto = {
     title: 'Test Note',
     content: 'Content',
-    createdAt: now,
     tags: [Tags.OTHER],
   };
 
