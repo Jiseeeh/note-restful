@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +15,7 @@ export class AuthService {
     };
   }
 
-  async signOut(token: string): Promise<void> {
+  async signOut(token: string) {
     try {
       const response = await fetch(
         `https://oauth2.googleapis.com/revoke?token=${token}`,
@@ -25,12 +25,22 @@ export class AuthService {
       );
 
       if (!response.ok) {
-        throw new Error(`failed to revoke token: ${response.statusText}`);
+        throw new HttpException(
+          `Failed to revoke token: ${response.statusText}`,
+          HttpStatus.BAD_REQUEST,
+        );
       }
 
-      console.log('token revoked successfully');
+      return {
+        message: 'Token revoked successfully',
+      };
     } catch (error) {
-      console.error('error revoking token:', error);
+      console.error({ error });
+
+      throw new HttpException(
+        'Error revoking token',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }
