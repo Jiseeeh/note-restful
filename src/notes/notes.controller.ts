@@ -50,6 +50,9 @@ export class NotesController {
   @ApiBadRequestResponse({
     description: 'Returns when the request body has invalid data',
   })
+  @ApiUnauthorizedResponse({
+    description: 'Returns when the user is not authenticated',
+  })
   async create(
     @Req() req,
     @Body(new ValidationPipe()) createNoteDto: CreateNoteDto,
